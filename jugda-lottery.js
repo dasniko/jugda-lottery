@@ -1,19 +1,27 @@
-if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to jugda-lottery.";
-  };
+People = new Meteor.Collection("people");
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
+if (Meteor.isClient) {
+    
+    Template.lottery.people = function () {
+        return People.find();
+    };
+    
+    Template.lottery.events({
+        "click": function() {
+            alert("click");
+        }
+    });
+    
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
+    Meteor.startup(function () {
+        var allPeople = People.find();
+        allPeople.forEach(function(p) {
+            People.remove(p);
+        });
+        for (var i = 0; i < participants.length; i++) {
+            People.insert({name: participants[i]});
+        }
+    });
 }

@@ -3,11 +3,32 @@
 </head>
 
 <body>
-  {{> hello}}
+  {{> lottery}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="lottery">
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand">JUG DA Lottery</a>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span4">
+                <ul class="nav nav-tabs nav-stacked">
+                    {{#each people}}
+                        {{> participant}}
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="span8">
+                <input type="button" value="Start Lottery" class="btn-large btn-primary startLottery">
+            </div>
+        </div>
+        
+    </div>
+</template>
+
+<template name="participant">
+    <li><a>{{name}}</a></li>
 </template>
