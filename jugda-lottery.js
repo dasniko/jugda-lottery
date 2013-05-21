@@ -16,10 +16,7 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
     Meteor.startup(function () {
-        var allPeople = People.find();
-        allPeople.forEach(function(p) {
-            People.remove(p);
-        });
+        People.remove({});
         for (var i = 0; i < participants.length; i++) {
             People.insert({name: participants[i]});
         }
