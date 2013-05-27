@@ -27,11 +27,11 @@
                 <input type="button" value="Stop Lottery" class="btn-large btn-block btn-danger stopLottery">
             </div>
             <div class="span4">
-                <ul class="nav nav-tabs nav-stacked">
+                <ol class="lead">
                     {{#each winners}}
                         {{> winner}}
                     {{/each}}
-                </ul>
+                </ol>
             </div>
         </div>
         
@@ -43,5 +43,5 @@
 </template>
 
 <template name="winner">
-    <li><a>{{name}}</a></li>
+    <li>{{name}}</li>
 </template>
