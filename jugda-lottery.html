@@ -21,8 +21,17 @@
                     {{/each}}
                 </ul>
             </div>
-            <div class="span8">
-                <input type="button" value="Start Lottery" class="btn-large btn-primary startLottery">
+            <div class="span4">
+                <input type="button" value="Show People" class="btn-large btn-block btn-primary showPeople">
+                <input type="button" value="Start Lottery" class="btn-large btn-block btn-success startLottery">
+                <input type="button" value="Stop Lottery" class="btn-large btn-block btn-danger stopLottery">
+            </div>
+            <div class="span4">
+                <ul class="nav nav-tabs nav-stacked">
+                    {{#each winners}}
+                        {{> winner}}
+                    {{/each}}
+                </ul>
             </div>
         </div>
         
@@ -30,5 +39,9 @@
 </template>
 
 <template name="participant">
+    <li><a>{{name}}</a></li>
+</template>
+
+<template name="winner">
     <li><a>{{name}}</a></li>
 </template>
