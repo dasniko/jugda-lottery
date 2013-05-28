@@ -2,6 +2,8 @@ People = new Meteor.Collection("people");
 
 if (Meteor.isClient) {
     
+    var handle;
+    
     Template.lottery.people = function () {
         return Session.get("people");
     };
@@ -18,7 +20,11 @@ if (Meteor.isClient) {
         },
         "click .startLottery": function() {
             console.log("start clicked");
-            handle = Meteor.setInterval(mixItUp, 250);
+            var p = Session.get("people");
+            if (!_.isUndefined(p) && _.size(p) > 0) {
+                console.log("starting lottery");
+                handle = Meteor.setInterval(mixItUp, 250);
+            }
             return false;
         },
         "click .stopLottery": function() {
@@ -29,9 +35,13 @@ if (Meteor.isClient) {
     });
     
     init = function() {
+        console.log("init lottery");
         Session.set("people", People.find().fetch());
         Session.set("winners", []);
-        Meteor.clearInterval(handle);
+        if (!_.isUndefined(handle) && !_.isNull(handle)) {
+            Meteor.clearInterval(handle);
+        }
+        handle = null;
     }
     
     mixItUp = function() {
@@ -41,13 +51,16 @@ if (Meteor.isClient) {
     };
     
     stopLottery = function() {
-        Meteor.clearInterval(handle);
-        var p = Session.get("people");
-        var w = p.shift();
-        var winners = Session.get("winners");
-        winners.push(w);
-        Session.set("people", p);
-        Session.set("winners", winners);
+        if (!_.isUndefined(handle) && !_.isNull(handle)) {
+            console.log("stopping lottery");
+            Meteor.clearInterval(handle);
+            handle = null;
+            var p = Session.get("people");
+            var w = Session.get("winners");
+            w.push(p.shift());
+            Session.set("people", p);
+            Session.set("winners", w);
+        }
     }
     
 }
