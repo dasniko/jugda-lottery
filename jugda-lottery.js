@@ -13,8 +13,7 @@ if (Meteor.isClient) {
     Template.lottery.events({
         "click .showPeople": function() {
             console.log("show clicked");
-            Session.set("people", People.find().fetch());
-            Session.set("winners", []);
+            init();
             return false;
         },
         "click .startLottery": function() {
@@ -29,6 +28,12 @@ if (Meteor.isClient) {
         }
     });
     
+    init = function() {
+        Session.set("people", People.find().fetch());
+        Session.set("winners", []);
+        Meteor.clearInterval(handle);
+    }
+    
     mixItUp = function() {
         var p = Session.get("people");
         p = _.shuffle(p);
@@ -39,12 +44,9 @@ if (Meteor.isClient) {
         Meteor.clearInterval(handle);
         var p = Session.get("people");
         var w = p.shift();
-        Session.set("people", p);
         var winners = Session.get("winners");
-        if (!winners) {
-            winners = [];
-        }
         winners.push(w);
+        Session.set("people", p);
         Session.set("winners", winners);
     }
     
