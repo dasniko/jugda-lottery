@@ -1,22 +1,8 @@
 participants = [
-	"Markus Roth",
-	"Michael Schumann",
-	"Alexander Bouriakov",
-	"Andreas Plies",
-	"Albert Brotzer",
-	"Patrick Rebelein",
-	"Jörg Eisenhardt",
-	"Metin Göktay",
-	"Lukas Graßmann",
-	"Florian Miess",
-	"Kantor",
-	"Markus Günther",
-	"Vitali Uhl",
-	"Andreas Borger",
-	"Antje Landschulz",
-	"Steffen Felbinger",
-	"Manfred Sans",
-	"Haralambie Dumistracel",
-	"Andreas Sewe",
-	"Susanne Braun"
+    "Niko Köbler",
+    "Jörn Hameister",
+    "Marcel Bruch",
+    "Sebastian Rose",
+    "Falk Sippach",
+    "Gerd Aschemann"
 ];
