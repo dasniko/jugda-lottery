@@ -15,7 +15,7 @@ if (Meteor.isClient) {
     Template.lottery.events({
         "click .showPeople": function() {
             console.log("show clicked");
-            init();
+            showPeople();
             return false;
         },
         "click .startLottery": function() {
@@ -31,12 +31,22 @@ if (Meteor.isClient) {
             console.log("stop clicked");
             Meteor.setTimeout(stopLottery, 1000);
             return false;
+        },
+        "click .addPerson": function() {
+            console.log("add clicked");
+            addPerson();
+            return false;
+        },
+        "click .initApp": function() {
+            console.log("initApp clicked");
+            initApp();
+            return false;
         }
     });
     
-    init = function() {
-        console.log("init lottery");
-        Session.set("people", People.find().fetch());
+    showPeople = function() {
+        console.log("show people");
+        Session.set("people", _.sortBy(People.find().fetch(), function(o) {return o.name}));
         Session.set("winners", []);
         if (!_.isUndefined(handle) && !_.isNull(handle)) {
             Meteor.clearInterval(handle);
@@ -45,6 +55,7 @@ if (Meteor.isClient) {
     }
     
     mixItUp = function() {
+        console.log("mixing it up...");
         var p = Session.get("people");
         p = _.shuffle(p);
         Session.set("people", p);
@@ -61,15 +72,33 @@ if (Meteor.isClient) {
             Session.set("people", p);
             Session.set("winners", w);
         }
+    };
+    
+    addPerson = function() {
+        var e = document.getElementById("newPerson");
+        var p = e.value;
+        console.log("adding person " + p);
+        e.value = "";
+        e.focus();
+        People.insert({name: p});
+        showPeople();
+    };
+    
+    initApp = function() {
+        Meteor.call("initApp", function(o1, o2) {
+            showPeople();
+    });
     }
     
 }
 
 if (Meteor.isServer) {
-    Meteor.startup(function () {
-        People.remove({});
-        for (var i = 0; i < participants.length; i++) {
-            People.insert({name: participants[i]});
+    Meteor.methods({
+        initApp: function() {
+            People.remove({});
+            for (var i = 0; i < participants.length; i++) {
+                People.insert({name: participants[i]});
+            }
         }
     });
 }
