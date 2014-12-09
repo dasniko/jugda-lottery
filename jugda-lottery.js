@@ -1,17 +1,18 @@
-People = new Meteor.Collection("people");
+showPeople = new Mongo.Collection("people");
 
 if (Meteor.isClient) {
-    
+
     var handle;
-    
-    Template.lottery.people = function () {
+
+    Template.lottery.helpers({
+      people: function () {
         return Session.get("people");
-    };
-    
-    Template.lottery.winners = function () {
+      },
+      winners: function () {
         return Session.get("winners");
-    };
-    
+      }
+    });
+
     Template.lottery.events({
         "click .showPeople": function() {
             console.log("show clicked");
@@ -24,6 +25,7 @@ if (Meteor.isClient) {
             if (!_.isUndefined(p) && _.size(p) > 0) {
                 console.log("starting lottery");
                 handle = Meteor.setInterval(mixItUp, 250);
+                Meteor.setTimeout(stopLottery, 2500);
             }
             return false;
         },
@@ -43,7 +45,7 @@ if (Meteor.isClient) {
             return false;
         }
     });
-    
+
     showPeople = function() {
         console.log("show people");
         Session.set("people", _.sortBy(People.find().fetch(), function(o) {return o.name}));
@@ -53,14 +55,14 @@ if (Meteor.isClient) {
         }
         handle = null;
     }
-    
+
     mixItUp = function() {
         console.log("mixing it up...");
         var p = Session.get("people");
         p = _.shuffle(p);
         Session.set("people", p);
     };
-    
+
     stopLottery = function() {
         if (!_.isUndefined(handle) && !_.isNull(handle)) {
             console.log("stopping lottery");
@@ -71,9 +73,10 @@ if (Meteor.isClient) {
             w.push(p.shift());
             Session.set("people", p);
             Session.set("winners", w);
+            document.getElementById("applause").play();
         }
     };
-    
+
     addPerson = function() {
         var e = document.getElementById("newPerson");
         var p = e.value;
@@ -83,13 +86,13 @@ if (Meteor.isClient) {
         People.insert({name: p});
         showPeople();
     };
-    
+
     initApp = function() {
         Meteor.call("initApp", function(o1, o2) {
             showPeople();
     });
     }
-    
+
 }
 
 if (Meteor.isServer) {
