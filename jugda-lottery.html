@@ -1,36 +1,45 @@
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Niko Köbler">
   <title>JUG DA Lottery</title>
 </head>
 
 <body>
+  {{> menu}}
   {{> lottery}}
+  {{> footer}}
 </body>
+
+<template name="menu">
+  <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><strong>JUG DA Lottery</strong></a>
+      </div>
+    </div>
+  </div>
+</template>
 
 <template name="lottery">
     <div class="container">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand">JUG DA Lottery</a>
+        <div class="row">
+            <div class="col-md-4">
+                {{#each people}}
+                    {{> participant}}
+                {{/each}}
             </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <ul class="nav nav-tabs nav-stacked">
-                    {{#each people}}
-                        {{> participant}}
-                    {{/each}}
-                </ul>
-            </div>
-            <div class="span4">
-                <input type="button" value="Show People" class="btn-large btn-block btn-primary showPeople">
+            <div class="col-md-4">
+                <input type="button" value="Init App" class="btn-large btn-block btn-primary initApp">
+                <input type="button" value="Reset People" class="btn-large btn-block btn-warning showPeople">
                 <input type="button" value="Start Lottery" class="btn-large btn-block btn-success startLottery">
-                <input type="button" value="Stop Lottery" class="btn-large btn-block btn-danger stopLottery">
                 <p>&nbsp;</p>
                 <input type="text" placeholder="new person..." id="newPerson">
-                <input type="button" value="Add Person" class="btn addPerson">
-                <input type="button" value="Init App" class="btn btn-block initApp">
+                <input type="button" value="Add Person" class="btn-small addPerson">
             </div>
-            <div class="span4">
+            <div class="col-md-4">
                 <ol class="lead">
                     {{#each winners}}
                         {{> winner}}
@@ -45,9 +54,18 @@
 </template>
 
 <template name="participant">
-    <li><a>{{name}}</a></li>
+    <span style="padding: 10px">{{name}}</span>
 </template>
 
 <template name="winner">
     <li>{{name}}</li>
+</template>
+
+<template name="footer">
+  <div class="container">
+    <hr>
+    <footer>
+      <p class="text-muted"><a href="http://javascript-training.net" target="_blank">&copy; <strong>{JavaScript}</strong>Training.net</a></p>
+    </footer>
+  </div>
 </template>

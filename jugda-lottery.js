@@ -1,4 +1,4 @@
-showPeople = new Mongo.Collection("people");
+People = new Mongo.Collection("people");
 
 if (Meteor.isClient) {
 
@@ -54,6 +54,7 @@ if (Meteor.isClient) {
             Meteor.clearInterval(handle);
         }
         handle = null;
+        document.getElementById("applause").load();
     }
 
     mixItUp = function() {
@@ -90,7 +91,7 @@ if (Meteor.isClient) {
     initApp = function() {
         Meteor.call("initApp", function(o1, o2) {
             showPeople();
-    });
+        });
     }
 
 }
