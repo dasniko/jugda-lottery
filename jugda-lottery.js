@@ -25,7 +25,7 @@ if (Meteor.isClient) {
             if (!_.isUndefined(p) && _.size(p) > 0) {
                 console.log("starting lottery");
                 handle = Meteor.setInterval(mixItUp, 250);
-                Meteor.setTimeout(stopLottery, 2500);
+                Meteor.setTimeout(stopLottery, 3000);
             }
             return false;
         },
