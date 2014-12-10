@@ -50,12 +50,12 @@ var ns6=document.getElementById&&!document.all
 var opera=browserinfos.match(/Opera/)
 var browserok=ie5||ns6||opera
 
-function randommaker(range) {
+randommaker = function(range) {
         rand=Math.floor(range*Math.random())
     return rand
 }
 
-function initsnow() {
+initsnow = function() {
         if (ie5 || opera) {
                 marginbottom = document.body.scrollHeight
                 marginright = document.body.clientWidth-15
@@ -109,5 +109,5 @@ for (i=0;i<=snowmax;i++) {
         document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
 }
 if (browserok) {
-        window.onload=initsnow
+        //window.onload=initsnow
 }
