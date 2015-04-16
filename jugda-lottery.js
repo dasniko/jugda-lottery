@@ -92,11 +92,6 @@ if (Meteor.isClient) {
         Meteor.call("initApp", function(o1, o2) {
             showPeople();
         });
-        var b = document.getElementById("backgroundmusic");
-        initsnow();
-        b.volume = 0.5;
-        b.loop = true;
-        b.play();
     }
 
 }
